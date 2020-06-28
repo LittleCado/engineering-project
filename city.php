@@ -7,8 +7,8 @@ function get_city_list($pdo)
     while ($row = $stmt->fetch()) {
         echo "
             <div class=\"container__radio\">
-                <input id=\"city-". $row['id'] ."\" type=\"radio\" name=\"city\" value=\"" . $row['city'] . "\" checked/>
-                <label for=\"city-". $row['id'] ."\">" . $row['city'] . "</label>
+                <input id=\"city-" . $row['id'] . "\" type=\"radio\" name=\"city\" value=\"" . $row['city'] . "\"/>
+                <label for=\"city-" . $row['id'] . "\">" . $row['city'] . "</label>
             </div>";
     }
 }
@@ -31,10 +31,14 @@ function get_city_list($pdo)
     </div>
 </header>
 <main class="main">
-    <form class="container">
-        <h1 class="container__header">Выберите город</h1>
-        <?php get_city_list($pdo);?>
+    <form class="container" action="hospital.php" method="post">
+        <?php get_city_list($pdo);
 
+        //Передача данных введенных на предыдущей странице через post
+        echo '<input type="hidden" name="polis" value="' . $_POST['polis'] . '">';
+        echo '<input type="hidden" name="birthday" value="' . $_POST['birthday'] . '">';
+        echo '<input type="hidden" name="customer_name" value="' . $_POST['customer_name'] . '">';
+        ?>
         <button class="container__submit" type="submit">Далее</button>
     </form>
 </main>
