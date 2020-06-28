@@ -11,3 +11,16 @@
 @import "variables";
 @import "fonts";
 @import "header";
+@import "container";
+
+@media (min-width: 1000px) {
+  body {
+    padding: 0 10vw;
+  }
+}
+
+@media (min-width: 1500px) {
+  body {
+    padding: 0 20vw;
+  }
+}

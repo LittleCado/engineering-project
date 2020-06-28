@@ -1,0 +1,90 @@
+.container {
+  @include flex(flex-start, space-around, column);
+  background-color: $light-bg-color;
+  padding: $padding;
+  margin: 0 $margin-y $margin-x;
+  border-radius: $border-radius;
+  font-size: $main-font-size;
+  &__label {
+    margin-bottom: $small-margin-x;
+  }
+  &__input {
+    margin-bottom: $margin-x;
+    padding: $small-padding-x $small-padding-y;
+    border-radius: $small-border-radius;
+    font-size: $input-font-size;
+    border: transparent 1px solid;
+    font-weight: 300;
+    width: 100%;
+    transition: 0.4s;
+    &:focus {
+      border: $accent-bg-color 1px solid;
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    }
+  }
+  &__submit {
+    background-color: $accent-bg-color;
+    color: $light-font-color;
+    font-size: $input-font-size;
+    padding: $small-padding-x;
+    border-radius: $small-border-radius;
+    width: 100%;
+    transition: 0.4s;
+    &:hover {
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__header {
+    margin-bottom: $margin-x;
+  }
+
+  &__radio {
+    display: block;
+    width: 100%;
+    & input[type="radio"] {
+      display: none;
+    }
+    & label {
+      display: block;
+      cursor: pointer;
+      background-color: $base-bg-color;
+      margin-bottom: $margin-x;
+      padding: $small-padding-x $small-padding-y;
+      border-radius: $small-border-radius;
+      font-size: $input-font-size;
+      border: transparent 1px solid;
+      font-weight: 500;
+      user-select: none;
+      transition: 0.4s;
+    }
+
+    /* Checked */
+    & input[type="radio"]:checked + label {
+      border: $accent-bg-color 1px solid;
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Hover */
+    & label:hover {
+      color: #666;
+    }
+
+    /* Disabled */
+    & input[type="radio"]:disabled + label {
+      background: #efefef;
+      color: #666;
+    }
+    &_time {
+      width: unset;
+    }
+  }
+  &__caption {
+    font-size: $caption-small-font-size;
+    padding-top: $small-padding-x;
+    font-weight: 300;
+  }
+  &__header {
+    margin-bottom: $margin-y;
+  }
+}
