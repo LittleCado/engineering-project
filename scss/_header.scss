@@ -1,0 +1,12 @@
+.header {
+  background-color: $accent-bg-color;
+  padding: $padding;
+  border-radius: $border-radius;
+  color: $light-font-color;
+  margin: $margin-x $margin-y;
+  font-size: $caption-font-size;
+  font-weight: 300;
+  &__img {
+    margin-bottom: $small-margin-x;
+  }
+}
