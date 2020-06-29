@@ -32,6 +32,7 @@ function get_city_list($pdo)
 </header>
 <main class="main">
     <form class="container" action="hospital.php" method="post">
+        <h1 class="container__header">Выберите город</h1>
         <?php get_city_list($pdo);
 
         //Передача данных введенных на предыдущей странице через post

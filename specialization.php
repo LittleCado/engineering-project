@@ -3,31 +3,40 @@ require 'db.php';
 
 function get_hospital_list($pdo)
 {
-    $sql = $pdo->prepare("SELECT hospitals.id as hid, name, type, city FROM `hospitals` 
-            JOIN types ON hospitals.type_id = types.id
-            JOIN cities ON hospitals.city_id = cities.id
-            WHERE city = ?");
-    $sql->execute([$_POST['city']]);
+    $sql = $pdo->prepare("SELECT specialization FROM `specializations` 
+                        JOIN doctors ON specializations.id = doctors.specialization_id
+                        JOIN hospitals ON doctors.hospital_id = hospitals.id
+                        WHERE hospitals.id = ?");
+    $sql->execute([$_POST['hospital_id']]);
 
     while ($row = $sql->fetch()) {
         echo "
             <div class=\"container__radio\">
-                <input id=\"hospital-" . $row['hid'] . "\" type=\"radio\" name=\"hospital_id\" value=\"" . $row['hid'] . "\"/>
-                <label for=\"hospital-" . $row['hid'] . "\">
-                " . $row['name'] . "
-                <p class=\"container__caption\">" . $row['type'] . "</p>
-                </label>
+                <input id=\"specialization-" . $row['id'] . "\" type=\"radio\" name=\"specialization\" value=\"" . $row['specialization'] . "\"/>
+                <label for=\"specialization-" . $row['id'] . "\">" . $row['specialization'] . "</label>
             </div>";
     }
 }
 
-function show_entered_data(){
+function show_entered_data($pdo)
+{
     echo '      
       <div class="container">
         <p class="container__info">
           Город: ' . $_POST['city'] . '
+        </p>';
+
+    $sql = $pdo->prepare("SELECT name FROM `hospitals`
+                        WHERE id = ?");
+    $sql->execute([$_POST['hospital_id']]);
+
+    while ($row = $sql->fetch()) {
+        echo "
+            <p class=\"container__info\">
+          Поликлиника: " . $row['name'] . "
         </p>
-      </div>';
+      </div>";
+    }
 }
 
 ?>
@@ -49,10 +58,10 @@ function show_entered_data(){
 </header>
 <main class="main">
 
-    <?php show_entered_data();?>
+    <?php show_entered_data($pdo); ?>
 
     <form class="container" action="specialization.php" method="post">
-        <h1 class="container__header">Выберите поликлинику</h1>
+        <h1 class="container__header">Выберите специализацию врача</h1>
         <?php get_hospital_list($pdo);
 
         //Передача данных введенных на предыдущих страницах (index и city) через post
@@ -60,6 +69,7 @@ function show_entered_data(){
         echo '<input type="hidden" name="birthday" value="' . $_POST['birthday'] . '">';
         echo '<input type="hidden" name="customer_name" value="' . $_POST['customer_name'] . '">';
         echo '<input type="hidden" name="city" value="' . $_POST['city'] . '">';
+        echo '<input type="hidden" name="hospital_id" value="' . $_POST['hospital_id'] . '">';
         ?>
         <button class="container__submit" type="submit">Далее</button>
     </form>
