@@ -21,6 +21,15 @@ function get_hospital_list($pdo)
     }
 }
 
+function show_entered_data(){
+    echo '      
+      <div class="container">
+        <p class="container__info">
+          Город: ' . $_POST['city'] . '
+        </p>
+      </div>';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +48,9 @@ function get_hospital_list($pdo)
     </div>
 </header>
 <main class="main">
+
+    <?php show_entered_data();?>
+
     <form class="container" action="hospital.php" method="post">
         <?php get_hospital_list($pdo);
 
