@@ -3,7 +3,7 @@ require 'db.php';
 
 function get_hospital_list($pdo)
 {
-    $sql = $pdo->prepare("SELECT specialization FROM `specializations` 
+    $sql = $pdo->prepare("SELECT specializations.id as id, specialization FROM `specializations` 
                         JOIN doctors ON specializations.id = doctors.specialization_id
                         JOIN hospitals ON doctors.hospital_id = hospitals.id
                         WHERE hospitals.id = ?");
