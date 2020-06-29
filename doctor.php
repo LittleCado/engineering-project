@@ -3,17 +3,17 @@ require 'db.php';
 
 function get_hospital_list($pdo)
 {
-    $sql = $pdo->prepare("SELECT specialization FROM `specializations` 
-                        JOIN doctors ON specializations.id = doctors.specialization_id
-                        JOIN hospitals ON doctors.hospital_id = hospitals.id
-                        WHERE hospitals.id = ?");
-    $sql->execute([$_POST['hospital_id']]);
+    $sql = $pdo->prepare("SELECT doctors.id as docid, doctors.name as docname FROM `doctors` 
+                            JOIN specializations ON doctors.specialization_id = specializations.id
+                            JOIN hospitals ON doctors.hospital_id = hospitals.id
+                            WHERE hospitals.id = ? and specialization = ?");
+    $sql->execute([$_POST['hospital_id'], $_POST['specialization']]);
 
     while ($row = $sql->fetch()) {
         echo "
             <div class=\"container__radio\">
-                <input id=\"specialization-" . $row['id'] . "\" type=\"radio\" name=\"specialization\" value=\"" . $row['specialization'] . "\"/>
-                <label for=\"specialization-" . $row['id'] . "\">" . $row['specialization'] . "</label>
+                <input id=\"doctor-" . $row['docid'] . "\" type=\"radio\" name=\"doctor\" value=\"" . $row['docname'] . "\"/>
+                <label for=\"doctor-" . $row['docid'] . "\">" . $row['docname'] . "</label>
             </div>";
     }
 }
@@ -35,8 +35,13 @@ function show_entered_data($pdo)
             <p class=\"container__info\">
           Поликлиника: " . $row['name'] . "
         </p>
-      </div>";
+      ";
     }
+    echo '      
+        <p class="container__info">
+          Специализация: ' . $_POST['specialization'] . '
+        </p>
+      </div>';
 }
 
 ?>
@@ -60,8 +65,8 @@ function show_entered_data($pdo)
 
     <?php show_entered_data($pdo); ?>
 
-    <form class="container" action="doctor.php" method="post">
-        <h1 class="container__header">Выберите специализацию врача</h1>
+    <form class="container" action="specialization.php" method="post">
+        <h1 class="container__header">Выберите врача</h1>
         <?php get_hospital_list($pdo);
 
         //Передача данных введенных на предыдущих страницах (index и city) через post
