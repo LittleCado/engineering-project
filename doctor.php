@@ -69,7 +69,7 @@ function show_entered_data($pdo)
         <h1 class="container__header">Выберите врача</h1>
         <?php get_hospital_list($pdo);
 
-        //Передача данных введенных на предыдущих страницах (index и city) через post
+        //Передача данных введенных на предыдущих страницах (index, city, hospital, specialization) через post
         echo '<input type="hidden" name="polis" value="' . $_POST['polis'] . '">';
         echo '<input type="hidden" name="birthday" value="' . $_POST['birthday'] . '">';
         echo '<input type="hidden" name="customer_name" value="' . $_POST['customer_name'] . '">';

@@ -91,7 +91,7 @@ function show_entered_data($pdo)
 
         <?php get_times_list($pdo);
 
-        //Передача данных введенных на предыдущих страницах (index, city, hospital, specialization, doctor) через post
+        //Передача данных введенных на предыдущих страницах (index, city, hospital, specialization, doctor, date) через post
         echo '<input type="hidden" name="polis" value="' . $_POST['polis'] . '">';
         echo '<input type="hidden" name="birthday" value="' . $_POST['birthday'] . '">';
         echo '<input type="hidden" name="customer_name" value="' . $_POST['customer_name'] . '">';
