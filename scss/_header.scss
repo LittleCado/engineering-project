@@ -6,7 +6,19 @@
   margin: $margin-x $margin-y;
   font-size: $caption-font-size;
   font-weight: 300;
+  @include flex(center, space-between, row);
   &__img {
     margin-bottom: $small-margin-x;
+  }
+  &__holder {
+    @include flex(center, space-between, column);
+  }
+  &__button {
+    color: $dark-font-color;
+    background-color: $base-bg-color;
+    padding: $small-padding-x $small-padding-y;
+    border-radius: $border-radius;
+    font-size: $caption-font-size;
+    margin: 0 0 $small-margin-x;
   }
 }
