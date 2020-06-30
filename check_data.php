@@ -1,25 +1,11 @@
 <?php
 require 'db.php';
 
-function get_times_list($pdo)
-{
-    $sql = $pdo->prepare("SELECT times.id as time_id, time FROM `times` 
-                            WHERE date_id = ?");
-    $sql->execute([$_POST['date_id']]);
-
-    while ($row = $sql->fetch()) {
-        echo "
-            <div class=\"container__radio\">
-                <input id=\"time-" . $row['time_id'] . "\" type=\"radio\" name=\"time_id\" value=\"" . $row['time_id'] . "\"/>
-                <label for=\"time-" . $row['time_id'] . "\">" . $row['time'] . "</label>
-            </div>";
-    }
-}
-
 function show_entered_data($pdo)
 {
+    echo "<div class=\"container\">
+            <h1 class=\"container__header\">Проверьте введенные данные</h1>";
     echo '      
-      <div class="container">
         <p class="container__info">
           Город: ' . $_POST['city'] . '
         </p>';
@@ -60,6 +46,16 @@ function show_entered_data($pdo)
         echo "
             <p class=\"container__info\">
           Дата: " . $row['date'] . "
+        </p>";
+    }
+    $sql = $pdo->prepare("SELECT time FROM `times`
+                        WHERE id = ?");
+    $sql->execute([$_POST['time_id']]);
+
+    while ($row = $sql->fetch()) {
+        echo "
+            <p class=\"container__info\">
+          Время: " . $row['time'] . "
         </p>
       </div>";
     }
@@ -86,11 +82,8 @@ function show_entered_data($pdo)
 
     <?php show_entered_data($pdo); ?>
 
-    <form class="container" action="check_data.php" method="post">
-        <h1 class="container__header">Выберите удобное время</h1>
-
-        <?php get_times_list($pdo);
-
+    <form class="container" action="insert.php" method="post">
+        <?php
         //Передача данных введенных на предыдущих страницах (index, city, hospital, specialization, doctor, date) через post
         echo '<input type="hidden" name="polis" value="' . $_POST['polis'] . '">';
         echo '<input type="hidden" name="birthday" value="' . $_POST['birthday'] . '">';
@@ -100,8 +93,9 @@ function show_entered_data($pdo)
         echo '<input type="hidden" name="specialization" value="' . $_POST['specialization'] . '">';
         echo '<input type="hidden" name="doctor_id" value="' . $_POST['doctor_id'] . '">';
         echo '<input type="hidden" name="date_id" value="' . $_POST['date_id'] . '">';
+        echo '<input type="hidden" name="time_id" value="' . $_POST['time_id'] . '">';
         ?>
-        <button class="container__submit" type="submit">Далее</button>
+        <button class="container__submit" type="submit">Записаться</button>
     </form>
 </main>
 </body>
