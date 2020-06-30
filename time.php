@@ -3,8 +3,9 @@ require 'db.php';
 
 function get_times_list($pdo)
 {
+    $count=0;
     $sql = $pdo->prepare("SELECT times.id as time_id, time FROM `times` 
-                            WHERE date_id = ?");
+                            WHERE date_id = ? and booked = 0");
     $sql->execute([$_POST['date_id']]);
 
     while ($row = $sql->fetch()) {
@@ -13,6 +14,10 @@ function get_times_list($pdo)
                 <input id=\"time-" . $row['time_id'] . "\" type=\"radio\" name=\"time_id\" value=\"" . $row['time_id'] . "\"/>
                 <label for=\"time-" . $row['time_id'] . "\">" . $row['time'] . "</label>
             </div>";
+        $count = $count+1;
+    }
+    if ($count==0){
+        echo '<h1 class="container__header">Нет доступного для записи времени</h1>';
     }
 }
 
