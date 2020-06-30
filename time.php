@@ -1,18 +1,17 @@
 <?php
 require 'db.php';
 
-function get_hospital_list($pdo)
+function get_times_list($pdo)
 {
-    $sql = $pdo->prepare("SELECT dates.id as date_id, date FROM `dates` 
-                            JOIN doctors ON doctors.id = dates.doctor_id
-                            WHERE dates.doctor_id = ?");
-    $sql->execute([$_POST['doctor_id']]);
+    $sql = $pdo->prepare("SELECT times.id as time_id, time FROM `times` 
+                            WHERE date_id = ?");
+    $sql->execute([$_POST['date_id']]);
 
     while ($row = $sql->fetch()) {
         echo "
             <div class=\"container__radio\">
-                <input id=\"date-" . $row['date_id'] . "\" type=\"radio\" name=\"date_id\" value=\"" . $row['date_id'] . "\"/>
-                <label for=\"date-" . $row['date_id'] . "\">" . $row['date'] . "</label>
+                <input id=\"time-" . $row['time_id'] . "\" type=\"radio\" name=\"time_id\" value=\"" . $row['time_id'] . "\"/>
+                <label for=\"time-" . $row['time_id'] . "\">" . $row['time'] . "</label>
             </div>";
     }
 }
@@ -50,6 +49,17 @@ function show_entered_data($pdo)
         echo "
             <p class=\"container__info\">
           Врач: " . $row['name'] . "
+        </p>";
+    }
+
+    $sql = $pdo->prepare("SELECT date FROM `dates`
+                        WHERE id = ?");
+    $sql->execute([$_POST['date_id']]);
+
+    while ($row = $sql->fetch()) {
+        echo "
+            <p class=\"container__info\">
+          Дата: " . $row['date'] . "
         </p>
       </div>";
     }
@@ -76,9 +86,10 @@ function show_entered_data($pdo)
 
     <?php show_entered_data($pdo); ?>
 
-    <form class="container" action="time.php" method="post">
-        <h1 class="container__header">Выберите удобную дату</h1>
-        <?php get_hospital_list($pdo);
+    <form class="container" action="specialization.php" method="post">
+        <h1 class="container__header">Выберите удобное время</h1>
+
+        <?php get_times_list($pdo);
 
         //Передача данных введенных на предыдущих страницах (index, city, hospital, specialization, doctor) через post
         echo '<input type="hidden" name="polis" value="' . $_POST['polis'] . '">';
@@ -86,8 +97,9 @@ function show_entered_data($pdo)
         echo '<input type="hidden" name="customer_name" value="' . $_POST['customer_name'] . '">';
         echo '<input type="hidden" name="city" value="' . $_POST['city'] . '">';
         echo '<input type="hidden" name="hospital_id" value="' . $_POST['hospital_id'] . '">';
-        echo '<input type="hidden" name="doctor_id" value="' . $_POST['doctor_id'] . '">';
         echo '<input type="hidden" name="specialization" value="' . $_POST['specialization'] . '">';
+        echo '<input type="hidden" name="doctor_id" value="' . $_POST['doctor_id'] . '">';
+        echo '<input type="hidden" name="date_id" value="' . $_POST['date_id'] . '">';
         ?>
         <button class="container__submit" type="submit">Далее</button>
     </form>
