@@ -3,17 +3,16 @@ require 'db.php';
 
 function get_hospital_list($pdo)
 {
-    $sql = $pdo->prepare("SELECT doctors.id as docid, doctors.name as docname FROM `doctors` 
-                            JOIN specializations ON doctors.specialization_id = specializations.id
-                            JOIN hospitals ON doctors.hospital_id = hospitals.id
-                            WHERE hospitals.id = ? and specialization = ?");
-    $sql->execute([$_POST['hospital_id'], $_POST['specialization']]);
+    $sql = $pdo->prepare("SELECT dates.id as date_id, date FROM `dates` 
+                            JOIN doctors ON doctors.id = dates.doctor_id
+                            WHERE dates.doctor_id = ? and times_booked  < 3");
+    $sql->execute([$_POST['doctor_id']]);
 
     while ($row = $sql->fetch()) {
         echo "
             <div class=\"container__radio\">
-                <input id=\"doctor-" . $row['docid'] . "\" type=\"radio\" name=\"doctor_id\" value=\"" . $row['docid'] . "\"/>
-                <label for=\"doctor-" . $row['docid'] . "\">" . $row['docname'] . "</label>
+                <input id=\"date-" . $row['date_id'] . "\" type=\"radio\" name=\"date_id\" value=\"" . $row['date_id'] . "\"/>
+                <label for=\"date-" . $row['date_id'] . "\">" . $row['date'] . "</label>
             </div>";
     }
 }
@@ -41,7 +40,19 @@ function show_entered_data($pdo)
         <p class="container__info">
           Специализация: ' . $_POST['specialization'] . '
         </p>
-      </div>';
+      ';
+
+    $sql = $pdo->prepare("SELECT name FROM `doctors`
+                        WHERE id = ?");
+    $sql->execute([$_POST['doctor_id']]);
+
+    while ($row = $sql->fetch()) {
+        echo "
+            <p class=\"container__info\">
+          Врач: " . $row['name'] . "
+        </p>
+      </div>";
+    }
 }
 
 ?>
@@ -65,17 +76,17 @@ function show_entered_data($pdo)
 
     <?php show_entered_data($pdo); ?>
 
-    <form class="container" action="date.php" method="post">
-        <h1 class="container__header">Выберите врача</h1>
+    <form class="container" action="specialization.php" method="post">
+        <h1 class="container__header">Выберите удобную дату</h1>
         <?php get_hospital_list($pdo);
 
-        //Передача данных введенных на предыдущих страницах (index и city) через post
+        //Передача данных введенных на предыдущих страницах (index, city, hospital, specialization, doctor) через post
         echo '<input type="hidden" name="polis" value="' . $_POST['polis'] . '">';
         echo '<input type="hidden" name="birthday" value="' . $_POST['birthday'] . '">';
         echo '<input type="hidden" name="customer_name" value="' . $_POST['customer_name'] . '">';
         echo '<input type="hidden" name="city" value="' . $_POST['city'] . '">';
         echo '<input type="hidden" name="hospital_id" value="' . $_POST['hospital_id'] . '">';
-        echo '<input type="hidden" name="specialization" value="' . $_POST['specialization'] . '">';
+        echo '<input type="hidden" name="doctor_id" value="' . $_POST['doctor_id'] . '">';
         ?>
         <button class="container__submit" type="submit">Далее</button>
     </form>
