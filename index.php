@@ -13,7 +13,7 @@
         <p class="header__text">Система электронной записи к врачу</p>
     </div>
     <div class="header__holder">
-        <a href="admin_check.php" class="header__button">Изменить список городов</a>
+        <a href="admin_check.php" class="header__button">Изменить названия поликлиник</a>
         <a href="#" class="header__button">Удалить запись</a>
     </div>
 </header>
