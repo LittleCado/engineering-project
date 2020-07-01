@@ -37,7 +37,7 @@
                 type="date"
                 name="birthday"
                 id="birthday"
-                max="01-01-2019"
+                max="2019-01-01"
                 required
         />
         <label class="container__label" for="customer_name">ФИО</label>
