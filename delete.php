@@ -33,8 +33,10 @@
         if (isset($_POST['rec_id'])) {
             $count = 0;
 
-            $sql = $pdo->prepare("SELECT recordings.id as rec_id, polis, birthday, doctors.name as dname, customer_name, time_id, date_id FROM `recordings`
+            $sql = $pdo->prepare("SELECT recordings.id as rec_id, polis, birthday, doctors.name as dname, customer_name, times.time as time, times.id as time_id, dates.date as date FROM `recordings`
                             JOIN doctors ON recordings.doctor_id = doctors.id
+                            JOIN dates ON recordings.date_id = dates.id
+                            JOIN times ON recordings.time_id = times.id
                             WHERE recordings.id = ?");
             $sql->execute([$_POST['rec_id']]);
 
@@ -57,18 +59,19 @@
                 </p>
                 
                 <p class="container__info">
-                  Дата: ' . $row['date_id'] . '
+                  Дата: ' . $row['date'] . '
                 </p>
                 
                 <p class="container__info">
-                  Время: ' . $row['time_id'] . '
+                  Время: ' . $row['time'] . '
                 </p>
                 ';
                 $count = $count + 1;
 
-                echo '<form action="delete-fin.php" method="get">
+                echo '<form action="delete-fin.php" method="post">
+                <input type="hidden" name="rec_id" value="' . $row['rec_id'] . '">
                 <input type="hidden" name="time_id" value="' . $row['time_id'] . '">
-                <button class="container__submit" type="submit">delete</button>
+                <button class="container__submit" type="submit">Удалить</button>
              </form>';
             }
             if ($count == 0) {
