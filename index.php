@@ -1,3 +1,17 @@
+<?php
+require 'db.php';
+
+function quantity($pdo)
+{
+    $sql = $pdo->prepare("SELECT COUNT(id) as count FROM `times` WHERE booked = 0");
+    $sql->execute();
+
+    while ($row = $sql->fetch()) {
+        echo $row['count'];
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +32,9 @@
     </div>
 </header>
 <main class="main">
+    <div class="container">
+        <h1 class="container__heading">Записей доступно: <?php quantity($pdo); ?></h1>
+    </div>
     <form class="container" action="city.php" method="post">
         <label class="container__label" for="polis"
         >Полис ОМС <small>(16 цифр)</small></label
