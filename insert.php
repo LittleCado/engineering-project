@@ -53,6 +53,7 @@ function show_info($pdo)
         insert($pdo);
         show_info($pdo);
     ?>
+        <a href="index.php">Вернуться на главную</a>
     </div>
 </main>
 </body>
