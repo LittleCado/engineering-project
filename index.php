@@ -19,6 +19,7 @@ function quantity($pdo)
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Электронная запись к врачу</title>
     <link rel="stylesheet" href="css/main.css"/>
+    <link rel="shortcut icon" href="img/icon.ico" />
 </head>
 <body>
 <header class="header br">
@@ -69,4 +70,17 @@ function quantity($pdo)
     </form>
 </main>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/jquery.iMissYou.js"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        $.iMissYou({
+            title: "Вернитесь пожалуйстааа!",
+            favicon: {
+                enabled: true,
+                src: "img/iMiss.ico",
+            },
+        });
+    });
+</script>
 </html>
