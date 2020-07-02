@@ -12,7 +12,7 @@ function get_hospital_list($pdo)
     while ($row = $sql->fetch()) {
         echo "
             <div class=\"container__radio\">
-                <input id=\"hospital-" . $row['hid'] . "\" type=\"radio\" name=\"hospital_id\" value=\"" . $row['hid'] . "\"/>
+                <input required id=\"hospital-" . $row['hid'] . "\" type=\"radio\" name=\"hospital_id\" value=\"" . $row['hid'] . "\"/>
                 <label for=\"hospital-" . $row['hid'] . "\">
                 " . $row['name'] . "
                 <p class=\"container__caption\">" . $row['type'] . "</p>

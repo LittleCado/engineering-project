@@ -11,7 +11,7 @@ function get_hospital_list($pdo)
     while ($row = $sql->fetch()) {
         echo "
             <div class=\"container__radio\">
-                <input id=\"date-" . $row['date_id'] . "\" type=\"radio\" name=\"date_id\" value=\"" . $row['date_id'] . "\"/>
+                <input required id=\"date-" . $row['date_id'] . "\" type=\"radio\" name=\"date_id\" value=\"" . $row['date_id'] . "\"/>
                 <label for=\"date-" . $row['date_id'] . "\">" . $row['date'] . "</label>
             </div>";
     }

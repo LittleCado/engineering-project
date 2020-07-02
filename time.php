@@ -11,7 +11,7 @@ function get_times_list($pdo)
     while ($row = $sql->fetch()) {
         echo "
             <div class=\"container__radio\">
-                <input id=\"time-" . $row['time_id'] . "\" type=\"radio\" name=\"time_id\" value=\"" . $row['time_id'] . "\"/>
+                <input required id=\"time-" . $row['time_id'] . "\" type=\"radio\" name=\"time_id\" value=\"" . $row['time_id'] . "\"/>
                 <label for=\"time-" . $row['time_id'] . "\">" . $row['time'] . "</label>
             </div>";
         $count = $count+1;

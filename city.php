@@ -7,7 +7,7 @@ function get_city_list($pdo)
     while ($row = $stmt->fetch()) {
         echo "
             <div class=\"container__radio\">
-                <input id=\"city-" . $row['id'] . "\" type=\"radio\" name=\"city\" value=\"" . $row['city'] . "\"/>
+                <input required id=\"city-" . $row['id'] . "\" type=\"radio\" name=\"city\" value=\"" . $row['city'] . "\"/>
                 <label for=\"city-" . $row['id'] . "\">" . $row['city'] . "</label>
             </div>";
     }
