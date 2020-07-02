@@ -70,9 +70,19 @@ function show_entered_data($pdo)
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Электронная запись к врачу</title>
     <link rel="stylesheet" href="css/main.css"/>
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/gutenberg-css@0.6"
+            media="print"
+    />
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/gutenberg-css@0.6/dist/themes/oldstyle.min.css"
+            media="print"
+    />
 </head>
 <body>
-<header class="header br">
+<header class="header no-print">
     <div class="header__logo">
         <img class="header__img" src="img/logo.svg" alt="logo"/>
         <p class="header__text">Система электронной записи к врачу</p>
